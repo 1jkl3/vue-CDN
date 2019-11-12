@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="icon" href="../img/bitbug_favicon.ico" type="image/x-icon"/>
+		<link rel="shortcut icon" href="../img/bitbug_favicon.ico" type="image/x-icon"/>
+	</head>
+	<!-- elementUI——css cdn -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 1.css后台css表 -->
+	<link rel="stylesheet" href="../css/people_management.css" />
+	<body>
+		<div id="app3" v-cloak>
+			<el-container>
+				<el-header>
+					<div class="fun_group">
+						<el-button plain icon='el-icon-upload el-icon--right' @click="uploadFile()">导入</el-button>
+						<el-button plain icon='el-icon-download' @click="downloadFile(tableData)">下载</el-button>
+						<el-button plain icon='el-icon-delete' @click="delBates(Selection)" :disabled='this.Selection.length===0'>批量删除</el-button>
+						<el-button plain icon='el-icon-edit-outline' @click="isaddtab=true">添加数据</el-button>
+					</div>
+				</el-header>
+				<el-main>
+					<el-dialog title='添加数据' :visible.sync='isaddtab'>
+						<div style="width: 250px;margin: auto;">
+							<el-form :model='addform'>
+								<el-form-item label='日期' prop='dateTime' label-width='40px'>
+									<el-date-picker v-model="addform.dateTime" type="date" placeholder="选择日期"></el-date-picker>
+								</el-form-item>
+								<el-form-item  label='名字' prop='name' label-width='40px'>
+									<el-input v-model='addform.name' placeholder='请输入名称' autocomplete="off"></el-input>
+								</el-form-item>
+								<el-form-item  label='地址' prop='address' label-width='40px'>
+									<el-input v-model='addform.address' placeholder='地址到县级即可'></el-input>
+								</el-form-item>
+								<el-form-item>
+									<el-button type='primary' @click="handleEditadd">确定</el-button>
+									<el-button plain @click='isaddtab=false'>取消</el-button>
+								</el-form-item>
+							</el-form>
+						</div>
+					</el-dialog>
+					<el-dialog title='更新数据' :visible.sync='isUpdata'>
+						<div style="width: 250px;margin: auto;">
+							<el-form :model='updata'>
+								<el-form-item label='日期' prop='dateTime' label-width='40px'>
+									<el-date-picker v-model="updata.dateTime" type="date" placeholder="选择日期"></el-date-picker>
+								</el-form-item>
+								<el-form-item  label='名字' prop='name' label-width='40px'>
+									<el-input v-model='updata.name' placeholder='请输入名称' autocomplete="off"></el-input>
+								</el-form-item>
+								<el-form-item  label='地址' prop='address' label-width='40px'>
+									<el-input v-model='updata.address' placeholder='地址到县级即可'></el-input>
+								</el-form-item>
+								<el-form-item>
+									<el-button type='primary' @click="handleEditupdata">确定</el-button>
+									<el-button plain @click='isUpdata=false'>取消</el-button>
+								</el-form-item>
+							</el-form>
+						</div>
+					</el-dialog>
+						<div v-loading.fullscreen.lock='fullscreenLoading' element-loading-text='拼命加载中...'>
+							<!-- 导入文件 -->
+							<input type="file" @change="importFile(this)" id="imFile" style="display: none"
+								accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+							<!-- 下载链接 -->
+							<a id="downlink"></a>
+						</div>
+						<el-table :data='tableData' @selection-change='handleSelectionChange'>
+							<el-table-column type="selection" width="55"></el-table-column>
+							<el-table-column label='日期' prop='dateTime'></el-table-column>
+							<el-table-column label='名字' prop='name'></el-table-column>
+							<el-table-column label='地址' prop='address'></el-table-column>
+							<el-table-column align="left" label='操作'>
+								<template slot-scope="scope">
+									<el-button
+									  size="mini"
+									  @click="handleEdit(scope.$index, scope.row)">更新</el-button>
+									<el-button
+									  size="mini"
+									  type="danger"
+									  @click.native.prevent="handleDelete(scope.$index, tableData)">删除</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+				</el-main>
+			</el-container>
+		</div>
+	</body>
+	<!-- vue CDN -->
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!-- 支持vue的elenemtUI封装js CDN -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- axios AJAX库 -->
+	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+	<!-- xlsx表格文件导入导出工具类 -->
+	<script src="https://cdn.bootcss.com/xlsx/0.15.1/xlsx.full.min.js"></script>
+	<!-- people_management.js -->
+	<script src="../js/people_management.js"></script>
+</html>

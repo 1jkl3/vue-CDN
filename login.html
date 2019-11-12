@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<!-- elementUI——css cdn -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- login.css -->
+		<link rel="stylesheet" href="css/login.css" />
+		<link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon"/>
+		<link rel="shortcut icon" href="img/bitbug_favicon.ico" type="image/x-icon"/>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<el-container direction='vertical'>
+				<!-- 登录内容容器 -->
+				<el-main>
+					<div class="login-div">
+						<h4>XXX医院管理系统</h4>
+						<div class="register">
+							<span>登录</span>
+							<!-- <a href="#">还没有账号,立即注册</a> -->
+						</div>
+						<!-- 登录表单 -->
+						<el-form ref="form" :model='form' v-show='formCode1'>
+							<el-form-item>
+								<el-input v-model='form.name' :placeholder='placeholdermsg'
+								prefix-icon="el-icon-user-solid"
+								></el-input>
+							</el-form-item>
+							<el-form-item v-show='passshow'>
+								<el-input type='password' v-model='form.password' placeholder='请输入密码'
+								prefix-icon="el-icon-s-goods"
+								></el-input>
+							</el-form-item>
+							<el-form-item v-show='show'>
+								<el-input v-model='form.code' style='width: 228px;' placeholder='请输入手机验证码'
+								prefix-icon="el-icon-phone"
+								></el-input>
+								<!-- 验证码  -->
+								<el-button type='primary' round @click='send' :disabled='isdisabled'>{{codemsg}}</el-button>
+							</el-form-item>
+							<el-form-item class='form4'>
+								<el-switch v-model='form.verify' id='mima' @change='remenber(form.verify)'></el-switch><label for='mima'>记住密码</label>
+								<a href="#" @click.prevent="wangji">忘记密码?</a>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" @click="submitForm(form)" style='margin-left: 155px;'>登录</el-button>
+								<el-button @click="resetForm(form)">重置</el-button>
+							</el-form-item>
+						</el-form>
+						<!-- 验证手机验证码 -->
+						<el-form ref="forget1" :model='forget1' v-show='formCode2'>
+							<el-form-item>
+								<el-input v-model='forget1.name'  placeholder='请输入手机号'
+								prefix-icon="el-icon-phone"></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-input v-model='forget1.code' style='width: 228px;' placeholder='请输入手机验证码'
+								prefix-icon="el-icon-s-goods"
+								></el-input>
+								<el-button type='primary' round @click='send' :disabled='isdisabled'>{{codemsg}}</el-button>
+							</el-form-item>
+							<el-form-item>
+								<el-button @click="last">上一步</el-button>
+								<el-button @click="next(forget1)">下一步</el-button>
+							</el-form-item>
+							<el-form-item>
+								
+							</el-form-item>
+						</el-form>
+						<!-- 修改密码 -->
+						<el-form ref="forget2" :model='forget2' v-show='formCode3'>
+							<el-form-item>
+								<el-input v-model='forget2.name' placeholder='请输入账号或手机号'
+								prefix-icon="el-icon-phone"></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-input v-model='forget2.password' placeholder='请输入密码'
+								prefix-icon="el-icon-s-goods"></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-input v-model='forget2.newpass' placeholder='请再次输入密码'
+								prefix-icon="el-icon-s-goods"></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-button @click="finish(forget2)">完成</el-button>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-main>
+				<!-- 底部容器 -->
+				<el-footer></el-footer>
+			</el-container>
+		</div>
+	</body>
+	<!-- vue CDN -->
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!-- 支持vue的elenemtUI封装js CDN -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- axios AJAX库 -->
+	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+	<!-- login.js -->
+	<script src="js/login.js"></script>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理</title>
+		<!-- elementUI——css cdn -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- backstage.css后台css表 -->
+		<link rel="stylesheet" href="../css/backstage.css" />
+		<link rel="icon" href="../img/bitbug_favicon.ico" type="image/x-icon"/>
+		<link rel="shortcut icon" href="../img/bitbug_favicon.ico" type="image/x-icon"/>
+	</head>
+	<body>
+		<div id="app2">
+			<!-- 最外层容器-横向 -->
+			<el-container v-cloak  style='height: 770px;'>
+				<!-- 左菜单 -->
+			  <el-aside width="auto">
+				  <el-menu default-active='2-1' class="el-menu-vertical-demo" :collapse='isCollapse'  @select="select">
+				  	  <el-menu-item index="1">
+				  	    <i class="el-icon-s-home"></i>
+				  	    <a href="backstage.html" style="text-decoration: none;color: black;">
+							<span slot="title">XXX医院后台管理系统</span>
+						</a>
+				  	  </el-menu-item>
+					<el-submenu index='2'>
+						<template slot='title'>
+							<i class="el-icon-user"></i>
+							<span slot="title">员工管理</span>
+						</template>
+						<el-menu-item-group>
+							<span slot='title'>员工信息管理</span>
+							<a href="people_management.html" class="jump_where" target='main'>
+								<el-menu-item index="2-1">员工基本信息</el-menu-item>
+							</a>
+							<a href="" class="jump_where" target='main'>
+								<el-menu-item index="2-2">员工权限</el-menu-item>
+							</a>
+						</el-menu-item-group>
+					</el-submenu>
+				  	<el-submenu index='3'>
+				  		<template slot='title'>
+				  			<i class="el-icon-s-custom"></i>
+				  			<span slot="title">病人管理</span>
+				  		</template>
+				  		<el-menu-item-group>
+				  			<span slot='title'>病人信息管理</span>
+				  			<a href="Patient_Information.html" class="jump_where" target='main'>
+								<el-menu-item index="3-1">病人基本信息</el-menu-item>
+							</a>
+				  			<el-menu-item index="3-2">病人离院审核</el-menu-item>
+				  		</el-menu-item-group>
+				  	</el-submenu>
+					<el-submenu index='4'>
+						<template slot='title'>
+							<i class="el-icon-s-tools"></i>
+							<span slot="title">系统管理</span>
+						</template>
+						<el-menu-item-group>
+							<el-menu-item index="4-1">日志信息</el-menu-item>
+							<el-menu-item index="4-2">背景颜色</el-menu-item>
+						</el-menu-item-group>
+					</el-submenu>
+				  </el-menu>
+			  </el-aside>
+			  <!-- 第二个容器-竖向中部容器 -->
+			  <el-container>
+			    <!-- 头部 -->
+			    <el-header style='background: #87CEEB;'>
+			    	<el-row class='row-1'>
+			    		<el-col :span='1'>
+			    			<el-checkbox-group v-model="isCollapse" style="margin-top: 11px;">
+			    			  <el-checkbox-button :label="isCollapse">
+			    					  <i class="el-icon-s-grid"></i>	
+			    			  </el-checkbox-button>
+			    			</el-checkbox-group>
+			    		</el-col>
+			    		<el-col :span='12' style='line-height: 60px;'>
+			    			 <el-autocomplete
+			    			      v-model="state"
+			    				  suffix-icon="el-icon-search"
+			    			      :fetch-suggestions="querySearch"
+			    			      placeholder="请输入内容"
+			    				  @select="handleSelect"
+			    				  style='float:right;'
+			    			    >
+			    				</el-autocomplete>
+			    		</el-col>
+			    		<el-col :span='11'>
+			    			<!-- 头像 -->
+			    			<el-dropdown style='float: right;' @command='selectdrop'>
+			    				<span>
+			    					<template>
+			    						<div class="demo-type">
+			    							<el-avatar icon="el-icon-user-solid"></el-avatar>
+			    						</div>
+			    					</template>
+			    				</span>
+			    				<el-dropdown-menu slot='dropdown'>
+			    					<el-dropdown-item command='1'>消息通知</el-dropdown-item>
+			    					<el-dropdown-item command='2'>个人中心</el-dropdown-item>
+			    					<el-dropdown-item command='3'>系统设置</el-dropdown-item>
+			    					<el-dropdown-item command='4'>退出登录</el-dropdown-item>
+			    				</el-dropdown-menu>
+			    			</el-dropdown>
+			    		</el-col>
+			    	</el-row>
+			    </el-header>
+			    <!-- 主体内容部分 -->
+			    <el-main style='background:#E9E4EA;padding: 0px;'>
+			    	<iframe id='uiui' src="people_management.html" name="main" width="99%" height="100%"></iframe>
+			    </el-main>
+			    <!-- 尾部 -->
+			    <el-footer>
+					请在此处放置备案
+				</el-footer>
+			  </el-container>
+			</el-container>
+		</div>
+	</body>
+	<!-- vue CDN -->
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!-- 支持vue的elenemtUI封装js CDN -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- axios AJAX库 -->
+	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+	<!-- backstage后台js -->
+	<script src="../js/backstage.js"></script>
+</html>
